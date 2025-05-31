@@ -1,6 +1,9 @@
 from llm_utils import generate_story
 from colorama import Fore, Style, init
-init(autoreset=True) 
+import pyttsx3
+init(autoreset=True)
+engine = pyttsx3.init()
+engine.setProperty('rate', 175)
 
 def main():
   name = input("What's your name ")
