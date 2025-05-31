@@ -1,6 +1,7 @@
 # LLM utilities and calls.
 
 import os
+import json
 import google.generativeai as genai
 from dotenv import load_dotenv
 from prompts import build_prompt
@@ -10,7 +11,7 @@ load_dotenv() # Load the information from the key location
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY")) # Search our files for the variable set to GOOGlE_API_KEY
 
 # Setting up the model baby
-model = genai.GenerativeModel("gemini-pro") # Tell what model we want
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 def generate_story(base_prompt, history):
     """
@@ -26,9 +27,21 @@ def generate_story(base_prompt, history):
         response = model.generate_content(prompt)
         response_text = response.text
 
-        import json
+        if response_text.startswith('```json'):
+            response_text = response_text.replace('```json', '').replace('```', '').strip()
+        elif response_text.startswith('```'):
+            response_text = response_text.replace('```', '').strip()
+            
+        # Debug this mfer
+        print(f"DEBUG - Raw response: {response_text[:200]}...")
+
         story_data = json.loads(response_text)
         return story_data["story"], story_data["options"]
+    
+    except json.JSONDecodeError as e:
+        print(f"JSON Error: {e}")
+        print(f"Raw response was: {response_text}")
+        return "The AI didn't respond in the right format!", ["Try again", "Exit"]
     
     except Exception as e:
         print("Error calling Gemini:", e)
