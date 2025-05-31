@@ -19,7 +19,7 @@ def generate_story(base_prompt, history):
     history: The previous story choices and what happened (for context)
     """
 
-    prompt =  build_prompt(base_prompt, history)
+    prompt = build_prompt(base_prompt, history)
 
     try:
         response = model.generate_content(prompt)
