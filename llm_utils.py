@@ -31,9 +31,7 @@ def generate_story(base_prompt, history):
             response_text = response_text.replace('```json', '').replace('```', '').strip()
         elif response_text.startswith('```'):
             response_text = response_text.replace('```', '').strip()
-            
-        # Debug this mfer
-        print(f"DEBUG - Raw response: {response_text[:200]}...")
+
 
         story_data = json.loads(response_text)
         return story_data["story"], story_data["options"]

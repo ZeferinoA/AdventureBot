@@ -1,7 +1,7 @@
 from llm_utils import generate_story
 
 def main():
-  name = input("What's your name")
+  name = input("What's your name ")
   print(f"Hello, {name}, Welcome to Adventure bot")
 
   base_prompt = input("Enter your story idea: ")
@@ -19,8 +19,8 @@ def main():
     print(f"\n{story_text}\n")
 
     print("What do you choose")
-    for i, option in enumerate(options, 1):
-      print(f"{i}. {option}")
+    for option in options:
+      print(f"{option}")
     
     while True:
       try:
@@ -40,7 +40,7 @@ def main():
     print("-" * 30)
 
   print(f"\n--- Final Turn ---")
-  final_story, _ = generate_story(base_prompt, history + {"This is the final part of the adventure. Provide an epic conclusion."})
+  final_story, _ = generate_story(base_prompt, history + ["This is the final part of the adventure. Provide an epic conclusion."])
   print(f"\n{final_story}\n")
 
   print("="*50)
