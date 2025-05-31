@@ -3,7 +3,7 @@ from colorama import Fore, Style, init
 import pyttsx3
 init(autoreset=True)
 engine = pyttsx3.init()
-engine.setProperty('rate', 175)
+engine.setProperty('rate', 200)
 
 def main():
   name = input("What's your name ")
@@ -46,6 +46,8 @@ def main():
     history.append(f"Player chose: {chosen_option}")
 
     print(f"\nYou chose: {chosen_option}")
+    engine.say(chosen_option)
+    engine.runAndWait()
     print("-" * 30)
 
   print(f"\n--- Final Turn ---")
