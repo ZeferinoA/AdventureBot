@@ -1,14 +1,16 @@
 from llm_utils import generate_story
+from colorama import Fore, Style, init
+init(autoreset=True) 
 
 def main():
   name = input("What's your name ")
-  print(f"Hello, {name}, Welcome to Adventure bot")
+  print(f"{Fore.CYAN} Hello, {name}, Welcome to Adventure bot")
 
   base_prompt = input("Enter your story idea: ")
   history = []
 
   print("\n" + "="*50)
-  print("Starting your adventure...")
+  print(f"{Fore.CYAN} Starting your adventure...")
   print("\n" + "="*50)
 
   for turn in range(1, 10):
@@ -17,10 +19,14 @@ def main():
     story_text, options = generate_story(base_prompt, history)
 
     print(f"\n{story_text}\n")
+    engine.say(story_text)
+    engine.runAndWait()
 
-    print("What do you choose")
+    print(f"{Fore.CYAN} What do you choose")
     for option in options:
       print(f"{option}")
+      engine.say(option)
+      engine.runAndWait()
     
     while True:
       try:
@@ -29,9 +35,9 @@ def main():
           chosen_option = options[choice - 1]
           break
         else:
-          print("Please enter 1 or 2.")
+          print(f"{Fore.YELLOW} Please enter 1 or 2.")
       except ValueError:
-        print("Please enter a valid number (1 or 2).")
+        print(f"{Fore.RED} Please enter a valid number (1 or 2).")
 
     history.append(f"Story: {story_text}")
     history.append(f"Player chose: {chosen_option}")
@@ -42,9 +48,11 @@ def main():
   print(f"\n--- Final Turn ---")
   final_story, _ = generate_story(base_prompt, history + ["This is the final part of the adventure. Provide an epic conclusion."])
   print(f"\n{final_story}\n")
+  engine.say(final_story)
+  engine.runAndWait()
 
   print("="*50)
-  print(f"Thanks for playing, {name}! Your adventure has ended.")
+  print(f"{Fore.GREEN} Thanks for playing, {name}! Your adventure has ended.")
   print("="*50)
 
 if __name__ == "__main__":
