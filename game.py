@@ -1,7 +1,10 @@
 import os
+from dotenv import load_dotenv
 import google.generativeai as genai
 
-os.environ["GOOGLE_API_KEY"] = #APIkey
+load_dotenv()
+os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
+
 model = genai.GenerativeModel('gemini-pro')
 
 name = input("What's your name")
@@ -13,6 +16,6 @@ for x in range(0,9,1):
   print(response.text)
   prompt = input(response)
 
-response = moderl.generate_content(prompt)
+response = model.generate_content(prompt)
 print(response.text)
 print(f"Thanks for Playing {name}")
